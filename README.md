@@ -130,7 +130,7 @@ import { UsersService } from './users.service';
 
 @Controller()
 export class UsersController {
-  constructor(private readonly usersService: UsersService ) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @Get()
   async getHello() {
@@ -149,14 +149,14 @@ export class UsersController {
 Example file migrations:
 
 ```typescript
-exports.up = function (knex) {
+exports.up = function(knex) {
   return knex.schema
-    .createTable('users', function (table) {
+    .createTable('users', function(table) {
       table.increments('id');
       table.string('first_name', 255).notNullable();
       table.string('last_name', 255).notNullable();
     })
-    .createTable('products', function (table) {
+    .createTable('products', function(table) {
       table.increments('id');
       table.string('name', 255).notNullable();
       table.decimal('price').notNullable();
@@ -207,8 +207,8 @@ exports.seed = function (knex) {
     .then(function () {
       return knex('users').insert([
         { id: 1, first_name: 'firstname1', last_name: 'lastname1' },
-        { id: 2, first_name: 'firstname2', last_name: 'lastname2'},
-        { id: 3, first_name: 'firstname3', last_name: 'lastname3'},
+        { id: 2, first_name: 'firstname2', last_name: 'lastname2' },
+        { id: 3, first_name: 'firstname3', last_name: 'lastname3' },
       ]);
     });
 };
