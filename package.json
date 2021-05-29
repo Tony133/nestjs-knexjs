@@ -36,7 +36,7 @@
     "knex": "0.95.6",
     "mysql": "2.18.1",
     "husky": "6.0.0",
-    "jest": "27.0.2",
+    "jest": "27.0.3",
     "prettier": "2.3.0",
     "reflect-metadata": "0.1.13",
     "release-it": "14.7.0",
