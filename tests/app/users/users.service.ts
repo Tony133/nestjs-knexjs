@@ -57,6 +57,6 @@ export class UsersService {
       throw new NotFoundException('Customer ID does not exist');
     }
     const users = await this.knex.table('user').where('id', id).del();
-    return {users };
+    return { users };
   }
 }
