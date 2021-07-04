@@ -1,5 +1,5 @@
 import { KnexModuleOptions } from "../interfaces";
-import * as Knex from 'knex';
+import { knex, Knex } from 'knex';
 import { DEFAULT_CONNECTION_NAME } from '../knex.constants';
 import { Observable } from "rxjs";
 import { delay, retryWhen, scan } from 'rxjs/operators';
@@ -28,13 +28,13 @@ export function getModelToken(
 
 export function getConnectionToken(
   connection: KnexModuleOptions | string = DEFAULT_CONNECTION_NAME,
-): string | Function | Type<Knex> {
+): string | Function {
   return DEFAULT_CONNECTION_NAME === connection
-    ? Knex
+    ? knex
     : 'string' === typeof connection
     ? `${connection}Connection`
     : DEFAULT_CONNECTION_NAME === connection.name || !connection.name
-    ? Knex
+    ? knex
     : `${connection.name}Connection`;
 }
 

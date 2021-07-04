@@ -2,7 +2,7 @@ import { Global, Module, DynamicModule, Provider, Type, OnApplicationShutdown, I
 import { KnexModuleAsyncOptions, KnexModuleOptions, KnexOptionsFactory } from './interfaces';
 import { getConnectionToken, handleRetry } from './common/knex.utils'
 import { KNEX_MODULE_OPTIONS } from './knex.constants';
-import * as Knex from 'knex';
+import { knex, Knex } from 'knex';
 import { ModuleRef } from '@nestjs/core';
 import { defer } from 'rxjs';
 
@@ -104,7 +104,7 @@ export class KnexCoreModule implements OnApplicationShutdown {
     options: KnexModuleOptions,
   ): Promise<Knex> {
     return await defer(async () => {
-      return Knex(options.config);
+      return knex(options.config);
     })
       .pipe(handleRetry(options.retryAttempts, options.retryDelay))
       .toPromise();
