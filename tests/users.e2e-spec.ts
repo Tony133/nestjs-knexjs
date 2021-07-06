@@ -35,27 +35,43 @@ describe('[Feature] Users - /users', () => {
   it('Create [POST /]', () => {
     return request(app.getHttpServer())
       .post('/users')
+      .expect(HttpStatus.CREATED)
+      .set('Accept', 'application/json')
       .send({
-        first_name: 'firstName1',
-        last_name: 'lastName1',
+        firstName: 'firstName',
+        lastName: 'lastName',
       })
-      .then(({ body }) => {
-        expect(body).toEqual({
-          first_name: 'firstName1',
-          last_name: 'lastName1',
-        });
-      });
+      .then((res) => {res.body});
   });
 
   it('Get all [GET /]', () => {
     return request(app.getHttpServer())
       .get('/users')
       .expect(HttpStatus.OK)
+      .set('Accept', 'application/json')
       .then(({ body }) => {
-        expect(body["users"]).toEqual([{
-            first_name: 'firstName1',
-            last_name: 'lastName1',
-        }]);
+        expect(body["users"]).toEqual([
+          {
+            id: 1,
+            firstName: 'firstName #1',
+            lastName: 'lastName #1',
+          },
+          {
+            id: 2,
+            firstName: 'firstName #1',
+            lastName: 'lastName #1',
+          },
+          {
+            id: 3,
+            firstName: 'firstName #1',
+            lastName: 'lastName #1',
+          },  
+          {
+            id: 4,
+            firstName: 'firstName',
+            lastName: 'lastName',
+          },
+        ]);
       });  
   });
 
@@ -63,18 +79,20 @@ describe('[Feature] Users - /users', () => {
     return request(app.getHttpServer())
       .get('/users/2')
       .expect(HttpStatus.OK)
+      .set('Accept', 'application/json')
       .then(({ body }) => {
-        expect(body["users"]).toEqual({
+        expect(body["users"]).toEqual([{
           id: 2,
-          first_name: 'firstName2',
-          last_name: 'lastName2',
-        });
+          firstName: 'firstName #1',
+          lastName: 'lastName #1',
+        }]);
       });  
   });
 
   it('Delete one [DELETE /:id]', () => {
     return request(app.getHttpServer())
       .delete('/users/1')
+      .set('Accept', 'application/json')
       .expect(HttpStatus.OK);
   });
 
