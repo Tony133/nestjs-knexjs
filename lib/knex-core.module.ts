@@ -4,7 +4,7 @@ import { getConnectionToken, handleRetry } from './common/knex.utils'
 import { KNEX_MODULE_OPTIONS } from './knex.constants';
 import { knex, Knex } from 'knex';
 import { ModuleRef } from '@nestjs/core';
-import { defer } from 'rxjs';
+import { defer, lastValueFrom } from 'rxjs';
 
 @Global()
 @Module({})
@@ -103,11 +103,11 @@ export class KnexCoreModule implements OnApplicationShutdown {
   private static async createConnectionFactory(
     options: KnexModuleOptions,
   ): Promise<Knex> {
-    return await defer(async () => {
-      return knex(options.config);
-    })
-      .pipe(handleRetry(options.retryAttempts, options.retryDelay))
-      .toPromise();
+    return lastValueFrom(
+      defer(async () => {
+        return knex(options.config);
+      }).pipe(handleRetry(options.retryAttempts, options.retryDelay)),
+    );
   }
 
 }
