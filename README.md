@@ -153,8 +153,8 @@ exports.up = function(knex) {
   return knex.schema
     .createTable('users', function(table) {
       table.increments('id');
-      table.string('first_name', 255).notNullable();
-      table.string('last_name', 255).notNullable();
+      table.string('firstName', 255).notNullable();
+      table.string('lastName', 255).notNullable();
     })
     .createTable('products', function(table) {
       table.increments('id');
@@ -206,9 +206,9 @@ exports.seed = function (knex) {
     .del()
     .then(function () {
       return knex('users').insert([
-        { id: 1, first_name: 'firstname1', last_name: 'lastname1' },
-        { id: 2, first_name: 'firstname2', last_name: 'lastname2' },
-        { id: 3, first_name: 'firstname3', last_name: 'lastname3' },
+        { id: 1, firstName: 'firstName#1', lastName: 'lastName#1' },
+        { id: 2, firstName: 'firstName#2', lastName: 'lastName#2' },
+        { id: 3, firstName: 'firstName#3', lastName: 'lastName#3' },
       ]);
     });
 };
