@@ -88,6 +88,18 @@ describe('[Feature] Users - /users', () => {
         }]);
       });  
   });
+  
+  it('Update one [PUT /:id]', () => {
+    return request(app.getHttpServer())
+      .put('/users/2')
+      .expect(HttpStatus.OK)
+      .send({
+        firstName: 'firstName update',
+        lastName: 'lastName update',
+      })
+      .then((res) => {res.body});
+  });
+
 
   it('Delete one [DELETE /:id]', () => {
     return request(app.getHttpServer())
