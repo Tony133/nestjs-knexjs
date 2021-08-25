@@ -35,7 +35,7 @@
     "eslint-plugin-import": "2.24.1",
     "knex": "0.95.10",
     "mysql": "2.18.1",
-    "husky": "7.0.1",
+    "husky": "7.0.2",
     "jest": "27.0.6",
     "prettier": "2.3.2",
     "reflect-metadata": "0.1.13",
