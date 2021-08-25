@@ -109,11 +109,11 @@ UsersService:
 ```typescript
 import { Injectable } from '@nestjs/common';
 import { Knex } from 'knex';
-import { InjectModel } from 'nest-knexjs';
+import { InjectConnection } from 'nest-knexjs';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel() private readonly knex: Knex) {}
+  constructor(@InjectConnection() private readonly knex: Knex) {}
 
   async findAll() {
     const users = await this.knex.table('users');
