@@ -23,7 +23,7 @@ export function getModelToken(
     throw new CircularDependencyException('@InjectModel()');
   }
   const connectionPrefix = getConnectionPrefix(connection);
-  return `${connectionPrefix}${entity.name}Repository`;
+  return `${connectionPrefix}${entity.name}`;
 }
 
 export function getConnectionToken(
@@ -32,10 +32,10 @@ export function getConnectionToken(
   return DEFAULT_CONNECTION_NAME === connection
     ? knex
     : 'string' === typeof connection
-    ? `${connection}Connection`
+    ? `${connection}`
     : DEFAULT_CONNECTION_NAME === connection.name || !connection.name
     ? knex
-    : `${connection.name}Connection`;
+    : `${connection.name}`;
 }
 
 /**
