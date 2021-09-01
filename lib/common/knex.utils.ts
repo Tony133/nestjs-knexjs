@@ -10,8 +10,8 @@ import { CircularDependencyException } from "../exceptions/circular-dependency.e
 const logger = new Logger('KnexModule');
 
 /**
- * This function generates an injection token for an Repostiory
- * @param {Function} This parameter can either be a Repostiory
+ * This function generates an injection token for an Repository
+ * @param {Function} This parameter can either be a Repository
  * @param {string} [connection='default'] Connection name
  * @returns {string} The Entity injection token
  */
