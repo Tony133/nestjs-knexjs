@@ -52,7 +52,7 @@ export class KnexCoreModule implements OnApplicationShutdown {
     };
   }
 
-  async onApplicationShutdown() {
+  async onApplicationShutdown(): Promise<any> {
     const connection = this.moduleRef.get<Knex>(
       getConnectionToken(this.options as KnexModuleOptions) as Type<Knex>,
     );

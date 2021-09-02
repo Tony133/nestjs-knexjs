@@ -28,7 +28,7 @@ export function getModelToken(
 
 export function getConnectionToken(
   connection: KnexModuleOptions | any = DEFAULT_CONNECTION_NAME,
-): string | Function {
+): any | Function {
   return `${connection || DEFAULT_CONNECTION_NAME}`;
 }
 
