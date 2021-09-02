@@ -28,8 +28,8 @@ export function getModelToken(
 
 export function getConnectionToken(
   connection: KnexModuleOptions | any = DEFAULT_CONNECTION_NAME,
-): any | Function {
-  return `${connection || DEFAULT_CONNECTION_NAME}`;
+): string | Function {
+  return `${connection.name || DEFAULT_CONNECTION_NAME}`;
 }
 
 /**
