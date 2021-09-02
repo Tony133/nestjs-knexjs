@@ -33,7 +33,7 @@ export class UsersService {
 
   async findOne(id: number) {
     if (!id) {
-      throw new NotFoundException('Customer ID does not exist');
+      throw new NotFoundException('User ID does not exist');
     }
     const users = await this.knex.table('user').where('id', id);
     return { users };
@@ -54,7 +54,7 @@ export class UsersService {
 
   async remove(id: number) {
     if (!id) {
-      throw new NotFoundException('Customer ID does not exist');
+      throw new NotFoundException('User ID does not exist');
     }
     const users = await this.knex.table('user').where('id', id).del();
     return { users };
