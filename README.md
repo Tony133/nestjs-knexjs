@@ -51,6 +51,7 @@ or
 - [Usage](#usage)
   - [KnexModule](#knexmodule)
   - [ExampleOfUse](#example-of-use)
+  - [MultiConnectionsDatabae](#multi-connections-database)
   - [CreateMigrations](#create-migrations)
   - [RunMigrations](#run-migrations)
   - [CreateSeeds](#create-seeds) 
@@ -137,6 +138,175 @@ export class UsersController {
     return await this.usersService.findAll();
   }
 }
+```
+
+## Multi Connections Database
+
+```typescript
+@Module({
+  imports: [
+    KnexModule.forRootAsync(
+      {
+        useFactory: () => ({
+          config: {
+            client: 'mysql',
+            version: '5.7',
+            useNullAsDefault: true,
+            connection: {
+              host: '127.0.0.1',
+              user: 'root',
+              port: 3306,
+              password: 'root',
+              database: 'test1',
+            },
+            pool: {
+              min: 2,
+              max: 10,
+            },
+          },
+        }),
+      },
+      'db1Connection',
+    ),
+    KnexModule.forRootAsync(
+      {
+        useFactory: () => ({
+          config: {
+            client: 'mysql',
+            version: '5.7',
+            useNullAsDefault: true,
+            connection: {
+              host: '127.0.0.1',
+              user: 'root',
+              port: 3307,
+              password: 'root',
+              database: 'test2',
+            },
+            pool: {
+              min: 2,
+              max: 10,
+            },
+          },
+        }),
+      },
+      'db2Connection',
+    ),
+  ],
+  controllers: [],
+  providers: [],
+})
+export class AppModule {}
+```
+
+Usage example with Multi Connection
+
+PostService:
+
+```typescript
+@Injectable()
+export class PostService {
+  constructor(
+    @InjectConnection('db2Connection')
+    private knexConnection: Knex,
+  ) {}
+
+  async create(createPostDto: CreatePostDto) {
+    try {
+      const post = await this.knexConnection.table('posts').insert({
+        title: createPostDto.title,
+        description: createPostDto.description,
+      });
+
+      return post;
+    } catch (err) {
+      throw new HttpException(err, HttpStatus.BAD_REQUEST);
+    }
+  }
+
+  async findAll() {
+    console.log(this.knexConnection);
+    const posts = await this.knexConnection.table('posts');
+    return { posts };
+  }
+}
+```
+
+UsersService:
+
+```typescript
+@Injectable()
+export class UsersService {
+  constructor(
+    @InjectConnection('db1Connection')
+    private knexConnection: Knex,
+  ) {}
+
+  async findAll() {
+    const users = await this.knexConnection.table('users');
+    return { users };
+  }
+
+  async create(createUserDto: CreateUserDto) {
+    try {
+      const users = await this.knexConnection.table('users').insert({
+        firstName: createUserDto.firstName,
+        lastName: createUserDto.lastName,
+      });
+
+      return { users };
+    } catch (err) {
+      throw new HttpException(err, HttpStatus.BAD_REQUEST);
+    }
+  }
+}
+```
+
+
+In `knexfile.js` update with your database configuration settings:
+
+```javascript
+module.exports = {
+  development: {
+    client: 'mysql',
+    version: '5.7',
+    connection: {
+      name: 'db1Connection',
+      host: '127.0.0.1',
+      user: 'root',
+      port: 3306,
+      password: 'root',
+      database: 'test1',
+    },
+    migrations: {
+      directory: './migrations/users',
+      tableName: '[:name_file_migrations_users]',
+    },
+  },
+  developmentTwo: {
+    client: 'mysql',
+    version: '5.7',
+    connection: {
+      name: 'db2Connection',
+      host: '127.0.0.1',
+      user: 'root',
+      port: 3307,
+      password: 'root',
+      database: 'test2',
+    },
+    migrations: {
+      directory: './migrations/posts',
+      tableName: '[:name_file_migrations_posts]',
+    },
+  },
+};
+```
+
+Run Migrations:
+
+```bash
+$ npx knex migrate:latest --env development
+
+$ npx knex migrate:latest --env developmentTwo
 ```
 
 ## Create Migrations
