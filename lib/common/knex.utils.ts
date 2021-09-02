@@ -1,41 +1,35 @@
-import { KnexModuleOptions } from "../interfaces";
-import { knex, Knex } from 'knex';
+import { KnexModuleOptions } from '../interfaces';
+import { knex } from 'knex';
 import { DEFAULT_CONNECTION_NAME } from '../knex.constants';
-import { Observable } from "rxjs";
+import { Observable } from 'rxjs';
 import { delay, retryWhen, scan } from 'rxjs/operators';
 import { v4 as uuid } from 'uuid';
-import { Logger, Type } from "@nestjs/common";
-import { CircularDependencyException } from "../exceptions/circular-dependency.exception";
+import { Logger } from '@nestjs/common';
+import { CircularDependencyException } from '../exceptions/circular-dependency.exception';
 
 const logger = new Logger('KnexModule');
 
 /**
- * This function generates an injection token for an Repository
- * @param {Function} This parameter can either be a Repository
+ * This function generates an injection token for an Model
+ * @param {Function} This parameter can either be a Model
  * @param {string} [connection='default'] Connection name
  * @returns {string} The Entity injection token
  */
 export function getModelToken(
-  entity: Function,
+  model: Function,
   connection: KnexModuleOptions | string = DEFAULT_CONNECTION_NAME,
 ) {
-  if ((entity === null) || (entity === undefined)) {
+  if (model === null || model === undefined) {
     throw new CircularDependencyException('@InjectModel()');
   }
   const connectionPrefix = getConnectionPrefix(connection);
-  return `${connectionPrefix}${entity.name}`;
+  return `${connectionPrefix}${model.name}`;
 }
 
 export function getConnectionToken(
-  connection: KnexModuleOptions | string = DEFAULT_CONNECTION_NAME,
+  connection: KnexModuleOptions | any = DEFAULT_CONNECTION_NAME,
 ): string | Function {
-  return DEFAULT_CONNECTION_NAME === connection
-    ? knex
-    : 'string' === typeof connection
-    ? `${connection}`
-    : DEFAULT_CONNECTION_NAME === connection.name || !connection.name
-    ? knex
-    : `${connection.name}`;
+  return `${connection || DEFAULT_CONNECTION_NAME}`;
 }
 
 /**
@@ -65,12 +59,13 @@ export function handleRetry(
 ): <T>(source: Observable<T>) => Observable<T> {
   return <T>(source: Observable<T>) =>
     source.pipe(
-      retryWhen(e =>
+      retryWhen((e) =>
         e.pipe(
           scan((errorCount, error: Error) => {
             logger.error(
-              `Unable to connect to the database. Retrying (${errorCount +
-                1})...`,
+              `Unable to connect to the database. Retrying (${
+                errorCount + 1
+              })...`,
               error.stack,
             );
             if (errorCount + 1 >= retryAttempts) {
