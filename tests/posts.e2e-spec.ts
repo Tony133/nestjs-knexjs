@@ -3,14 +3,14 @@ import { TestingModule, Test } from '@nestjs/testing';
 import { UsersModule } from './app-multi-database/app/users/users.module';
 import { KnexModule } from '../lib';
 import * as request from 'supertest';
+import { PostModule } from './app-multi-database/app/post/post.module';
 
-describe('[Feature] Users - /users', () => {
+describe('[Feature] Posts - /posts', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
-        UsersModule,
         KnexModule.forRootAsync(
           {
             useFactory: () => ({
@@ -21,9 +21,9 @@ describe('[Feature] Users - /users', () => {
                 connection: {
                   host: '127.0.0.1',
                   user: 'root',
-                  port: 3306,
+                  port: 3307,
                   password: 'root',
-                  database: 'test1',
+                  database: 'test2',
                 },
                 pool: {
                   min: 2,
@@ -32,8 +32,10 @@ describe('[Feature] Users - /users', () => {
               },
             }),
           },
-          'db1Connection',
+          'db2Connection',
         ),
+        UsersModule,
+        PostModule,
       ],
     }).compile();
 
@@ -43,12 +45,12 @@ describe('[Feature] Users - /users', () => {
 
   it('Create [POST /]', () => {
     return request(app.getHttpServer())
-      .post('/users')
+      .post('/posts')
       .expect(HttpStatus.CREATED)
       .set('Accept', 'application/json')
       .send({
-        firstName: 'firstName',
-        lastName: 'lastName',
+        title: 'title #1',
+        description: 'description #1',
       })
       .then((res) => {
         res.body;
@@ -57,30 +59,30 @@ describe('[Feature] Users - /users', () => {
 
   it('Get all [GET /]', () => {
     return request(app.getHttpServer())
-      .get('/users')
+      .get('/posts')
       .expect(HttpStatus.OK)
       .set('Accept', 'application/json')
       .then(({ body }) => {
         expect(body['users']).toEqual([
           {
             id: 1,
-            firstName: 'firstName #1',
-            lastName: 'lastName #1',
+            title: 'title #1',
+            description: 'description #1',
           },
           {
             id: 2,
-            firstName: 'firstName #1',
-            lastName: 'lastName #1',
+            title: 'title #1',
+            description: 'description #1',
           },
           {
             id: 3,
-            firstName: 'firstName #1',
-            lastName: 'lastName #1',
+            title: 'title #1',
+            description: 'description #1',
           },
           {
             id: 4,
-            firstName: 'firstName',
-            lastName: 'lastName',
+            title: 'title #1',
+            description: 'description #1',
           },
         ]);
       });
@@ -88,15 +90,15 @@ describe('[Feature] Users - /users', () => {
 
   it('Get one [GET /:id]', () => {
     return request(app.getHttpServer())
-      .get('/users/2')
+      .get('/posts/2')
       .expect(HttpStatus.OK)
       .set('Accept', 'application/json')
       .then(({ body }) => {
         expect(body['users']).toEqual([
           {
             id: 2,
-            firstName: 'firstName #1',
-            lastName: 'lastName #1',
+            title: 'title #1',
+            description: 'description #1',
           },
         ]);
       });
@@ -104,11 +106,11 @@ describe('[Feature] Users - /users', () => {
 
   it('Update one [PUT /:id]', () => {
     return request(app.getHttpServer())
-      .put('/users/2')
+      .put('/posts/2')
       .expect(HttpStatus.OK)
       .send({
-        firstName: 'firstName update',
-        lastName: 'lastName update',
+        title: 'title update',
+        description: 'description update',
       })
       .then((res) => {
         res.body;
@@ -117,7 +119,7 @@ describe('[Feature] Users - /users', () => {
 
   it('Delete one [DELETE /:id]', () => {
     return request(app.getHttpServer())
-      .delete('/users/1')
+      .delete('/posts/1')
       .set('Accept', 'application/json')
       .expect(HttpStatus.OK);
   });

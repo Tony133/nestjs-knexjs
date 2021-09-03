@@ -5,22 +5,25 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { Knex } from 'knex';
-import { InjectModel } from '../../../lib';
+import { InjectConnection } from '../../../../lib';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectModel() private readonly knex: Knex) {}
+  constructor(
+    @InjectConnection('db1Connection')
+    private knexConnection: Knex,
+  ) {}
 
   async findAll() {
-    const users = await this.knex.table('user')
+    const users = await this.knexConnection.table('users');
     return { users };
   }
 
   async create(createUserDto: CreateUserDto) {
     try {
-      const users = await this.knex.table('user').insert({
+      const users = await this.knexConnection.table('users').insert({
         firstName: createUserDto.firstName,
         lastName: createUserDto.lastName,
       });
@@ -35,16 +38,19 @@ export class UsersService {
     if (!id) {
       throw new NotFoundException('User ID does not exist');
     }
-    const users = await this.knex.table('user').where('id', id);
+    const users = await this.knexConnection.table('users').where('id', id);
     return { users };
   }
 
   async update(id: number, updateUserDto: UpdateUserDto) {
     try {
-      const users = await this.knex.table('user').where('id', id).update({
-        firstName: updateUserDto.firstName,
-        lastName: updateUserDto.lastName,
-      });
+      const users = await this.knexConnection
+        .table('users')
+        .where('id', id)
+        .update({
+          firstName: updateUserDto.firstName,
+          lastName: updateUserDto.lastName,
+        });
 
       return { users };
     } catch (err) {
@@ -56,7 +62,10 @@ export class UsersService {
     if (!id) {
       throw new NotFoundException('User ID does not exist');
     }
-    const users = await this.knex.table('user').where('id', id).del();
+    const users = await this.knexConnection
+      .table('users')
+      .where('id', id)
+      .del();
     return { users };
   }
 }

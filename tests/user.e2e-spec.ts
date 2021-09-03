@@ -1,39 +1,30 @@
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import { TestingModule, Test } from '@nestjs/testing';
-import { UsersModule } from './app-multi-database/app/users/users.module';
+import { UsersModule } from './app-knex/app/users/users.module';
 import { KnexModule } from '../lib';
 import * as request from 'supertest';
 
-describe('[Feature] Users - /users', () => {
+describe('[Feature] User - /user', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [
         UsersModule,
-        KnexModule.forRootAsync(
-          {
-            useFactory: () => ({
-              config: {
-                client: 'mysql',
-                version: '5.7',
-                useNullAsDefault: true,
-                connection: {
-                  host: '127.0.0.1',
-                  user: 'root',
-                  port: 3306,
-                  password: 'root',
-                  database: 'test1',
-                },
-                pool: {
-                  min: 2,
-                  max: 10,
-                },
-              },
-            }),
+        KnexModule.forRoot({
+          config: {
+            client: 'mysql',
+            version: '5.7',
+            useNullAsDefault: true,
+            connection: {
+              host: '127.0.0.1',
+              user: 'root',
+              port: 3308,
+              password: 'root',
+              database: 'test',
+            },
           },
-          'db1Connection',
-        ),
+        }),
       ],
     }).compile();
 
@@ -43,7 +34,7 @@ describe('[Feature] Users - /users', () => {
 
   it('Create [POST /]', () => {
     return request(app.getHttpServer())
-      .post('/users')
+      .post('/user')
       .expect(HttpStatus.CREATED)
       .set('Accept', 'application/json')
       .send({
@@ -57,7 +48,7 @@ describe('[Feature] Users - /users', () => {
 
   it('Get all [GET /]', () => {
     return request(app.getHttpServer())
-      .get('/users')
+      .get('/user')
       .expect(HttpStatus.OK)
       .set('Accept', 'application/json')
       .then(({ body }) => {
@@ -88,7 +79,7 @@ describe('[Feature] Users - /users', () => {
 
   it('Get one [GET /:id]', () => {
     return request(app.getHttpServer())
-      .get('/users/2')
+      .get('/user/2')
       .expect(HttpStatus.OK)
       .set('Accept', 'application/json')
       .then(({ body }) => {
@@ -104,7 +95,7 @@ describe('[Feature] Users - /users', () => {
 
   it('Update one [PUT /:id]', () => {
     return request(app.getHttpServer())
-      .put('/users/2')
+      .put('/user/2')
       .expect(HttpStatus.OK)
       .send({
         firstName: 'firstName update',
@@ -117,7 +108,7 @@ describe('[Feature] Users - /users', () => {
 
   it('Delete one [DELETE /:id]', () => {
     return request(app.getHttpServer())
-      .delete('/users/1')
+      .delete('/user/1')
       .set('Accept', 'application/json')
       .expect(HttpStatus.OK);
   });
