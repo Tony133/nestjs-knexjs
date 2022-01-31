@@ -1,6 +1,6 @@
 {
   "name": "nest-knexjs",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Knexjs module for Nest framework (node.js) 😻",
   "author": "Tony133",
   "license": "MIT",
