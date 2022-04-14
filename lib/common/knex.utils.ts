@@ -27,8 +27,11 @@ export function getModelToken(
 }
 
 export function getConnectionToken(
-  connection: KnexModuleOptions | any = DEFAULT_CONNECTION_NAME,
+  connection: KnexModuleOptions | string = DEFAULT_CONNECTION_NAME,
 ): string | Function {
+  if (typeof connection === 'string') {
+    return connection;
+  }
   return `${connection.name || DEFAULT_CONNECTION_NAME}`;
 }
 
