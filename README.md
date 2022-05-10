@@ -134,7 +134,7 @@ export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
   @Get()
-  async getHello() {
+  async getAllUsers() {
     return await this.usersService.findAll();
   }
 }
