@@ -15,7 +15,8 @@
     "test:e2e": "jest --config ./tests/jest-e2e.json --runInBand",
     "test:e2e:dev": "jest --config ./tests/jest-e2e.json --runInBand --watch",
     "prerelease": "npm run build",
-    "release": "release-it"
+    "release": "release-it",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@commitlint/cli": "16.2.4",
@@ -58,12 +59,6 @@
     "*.ts": [
       "prettier --write"
     ]
-  },
-  "husky": {
-    "hooks": {
-      "commit-msg": "commitlint -c .commitlintrc.json -E HUSKY_GIT_PARAMS",
-      "pre-commit": "lint-staged"
-    }
   },
   "repository": {
     "type": "git",
