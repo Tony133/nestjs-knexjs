@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { KnexModule } from '../../lib';
+import { KnexModule } from '../../../lib';
 import { UsersModule } from './users/users.module';
 
 @Module({
@@ -11,6 +11,7 @@ import { UsersModule } from './users/users.module';
         useNullAsDefault: true,
         connection: {
           host: '127.0.0.1',
+          port: 3308,
           user: 'root',
           password: 'root',
           database: 'test',

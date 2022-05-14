@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { KnexModule } from '../../lib';
+import { KnexModule } from '../../../lib';
 import { PostModule } from './post/post.module';
 import { UsersModule } from './users/users.module';
 
