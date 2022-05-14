@@ -224,7 +224,6 @@ export class PostService {
   }
 
   async findAll() {
-    console.log(this.knexConnection);
     const posts = await this.knexConnection.table('posts');
     return { posts };
   }
