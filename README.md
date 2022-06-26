@@ -51,7 +51,7 @@ or
 - [Usage](#usage)
   - [KnexModule](#knexmodule)
   - [ExampleOfUse](#example-of-use)
-  - [MultiConnectionsDatabae](#multi-connections-database)
+  - [MultiConnectionsDatabase](#multi-connections-database)
   - [CreateMigrations](#create-migrations)
   - [RunMigrations](#run-migrations)
   - [CreateSeeds](#create-seeds) 
