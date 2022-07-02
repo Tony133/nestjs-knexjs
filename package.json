@@ -42,7 +42,7 @@
     "reflect-metadata": "0.1.13",
     "release-it": "15.1.1",
     "supertest": "6.2.4",
-    "ts-node": "10.8.1",
+    "ts-node": "10.8.2",
     "rxjs": "7.5.5",
     "ts-jest": "28.0.5",
     "tsconfig-paths": "4.0.0",
