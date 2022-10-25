@@ -41,7 +41,7 @@
     "jest": "29.2.2",
     "reflect-metadata": "0.1.13",
     "release-it": "15.5.0",
-    "supertest": "6.3.0",
+    "supertest": "6.3.1",
     "ts-node": "10.9.1",
     "rxjs": "7.5.7",
     "ts-jest": "29.0.3",
