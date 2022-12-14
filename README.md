@@ -28,7 +28,7 @@ Knexjs module for Nest framework (node.js) 😻
 
 ## Installation
 
-First install the module via `yarn` or `npm` and do not forget to install the driver package as well:
+First install the module via `yarn` or `npm` or `pnpm` and do not forget to install the driver package as well:
 
 
 ```bash
@@ -42,6 +42,13 @@ or
     $ yarn add nest-knexjs knex mysql   # for mysql/mariadb
     $ yarn add nest-knexjs knex pg      # for postgresql
     $ yarn add nest-knexjs knex sqlite  # for sqlite
+```
+or 
+
+```bash
+    $ pnpm add nest-knexjs knex mysql   # for mysql/mariadb
+    $ pnpm add nest-knexjs knex pg      # for postgresql
+    $ pnpm add nest-knexjs knex sqlite  # for sqlite
 ```
 
 ## Table of Contents
