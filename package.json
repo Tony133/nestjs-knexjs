@@ -1,6 +1,6 @@
 {
   "name": "nest-knexjs",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Knexjs module for Nest framework (node.js) 😻",
   "author": "Tony133",
   "license": "MIT",
@@ -26,34 +26,34 @@
     "@nestjs/platform-express": "9.3.2",
     "@nestjs/testing": "9.3.2",
     "@types/express": "4.17.17",
-    "@types/node": "18.14.0",
     "@types/jest": "29.4.0",
+    "@types/node": "18.14.0",
     "@types/supertest": "2.0.12",
     "@typescript-eslint/eslint-plugin": "5.52.0",
     "@typescript-eslint/parser": "5.52.0",
     "eslint": "8.34.0",
     "eslint-config-prettier": "8.6.0",
     "eslint-plugin-import": "2.27.5",
+    "husky": "8.0.3",
+    "jest": "29.4.3",
     "knex": "2.4.2",
     "mysql": "2.18.1",
-    "husky": "8.0.3",
     "prettier": "2.8.4",
-    "jest": "29.4.3",
     "reflect-metadata": "0.1.13",
     "release-it": "15.6.0",
-    "supertest": "6.3.3",
-    "ts-node": "10.9.1",
     "rxjs": "7.8.0",
+    "supertest": "6.3.3",
     "ts-jest": "29.0.5",
+    "ts-node": "10.9.1",
     "tsconfig-paths": "4.1.2",
     "typescript": "4.9.5"
   },
   "peerDependencies": {
     "@nestjs/common": "^7.0.0 || ^8.0.0 || ^9.0.0",
     "@nestjs/core": "^7.0.0 || ^8.0.0 || ^9.0.0",
+    "knex": "^0.21.17 || ^0.95.0 || ^1.0.0 || ^2.0.0",
     "reflect-metadata": "^0.1.13",
-    "rxjs": "^6.6.3 || ^7.2.0",
-    "knex": "^0.21.17 || ^0.95.0 || ^1.0.0 || ^2.0.0"
+    "rxjs": "^6.6.3 || ^7.2.0"
   },
   "lint-staged": {
     "**/*.{ts,json}": []
@@ -61,5 +61,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/tony133/nestjs-knexjs"
+  },
+  "dependencies": {
+    "uuid": "9.0.0"
   }
 }

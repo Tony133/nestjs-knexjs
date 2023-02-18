@@ -5,6 +5,7 @@
 /.idea
 /.awcache
 /.vscode
+tags
 
 # misc
 npm-debug.log
