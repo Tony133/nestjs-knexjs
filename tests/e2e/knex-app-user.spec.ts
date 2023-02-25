@@ -1,10 +1,10 @@
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import { TestingModule, Test } from '@nestjs/testing';
-import { UsersModule } from './app-knex/app/users/users.module';
-import { KnexModule } from '../lib';
+import { UsersModule } from '../src/apps/app-knex/app/users/users.module';
+import { KnexModule } from '../../lib';
 import * as request from 'supertest';
 
-describe('[Feature] User - /user', () => {
+describe('[Feature] Users - /users', () => {
   let app: INestApplication;
 
   beforeAll(async () => {
@@ -19,7 +19,7 @@ describe('[Feature] User - /user', () => {
             connection: {
               host: '127.0.0.1',
               user: 'root',
-              port: 3308,
+              port: 3306,
               password: 'root',
               database: 'test',
             },
@@ -32,44 +32,29 @@ describe('[Feature] User - /user', () => {
     await app.init();
   });
 
-  it('Create [POST /]', () => {
+  it('should create a new user [POST /users]', () => {
     return request(app.getHttpServer())
-      .post('/user')
+      .post('/users')
       .expect(HttpStatus.CREATED)
       .set('Accept', 'application/json')
       .send({
         firstName: 'firstName',
         lastName: 'lastName',
       })
-      .then((res) => {
-        res.body;
+      .then(({ body }) => {
+        expect(body).toEqual({ users: [1] });
       });
   });
 
-  it('Get all [GET /]', () => {
+  it('should get all users [GET /users]', () => {
     return request(app.getHttpServer())
-      .get('/user')
+      .get('/users')
       .expect(HttpStatus.OK)
       .set('Accept', 'application/json')
       .then(({ body }) => {
         expect(body['users']).toEqual([
           {
             id: 1,
-            firstName: 'firstName #1',
-            lastName: 'lastName #1',
-          },
-          {
-            id: 2,
-            firstName: 'firstName #1',
-            lastName: 'lastName #1',
-          },
-          {
-            id: 3,
-            firstName: 'firstName #1',
-            lastName: 'lastName #1',
-          },
-          {
-            id: 4,
             firstName: 'firstName',
             lastName: 'lastName',
           },
@@ -77,39 +62,38 @@ describe('[Feature] User - /user', () => {
       });
   });
 
-  it('Get one [GET /:id]', () => {
+  it('should get a user by id [GET /users/:id]', () => {
     return request(app.getHttpServer())
-      .get('/user/2')
+      .get('/users/1')
       .expect(HttpStatus.OK)
       .set('Accept', 'application/json')
       .then(({ body }) => {
         expect(body['users']).toEqual([
           {
-            id: 2,
-            firstName: 'firstName #1',
-            lastName: 'lastName #1',
+            id: 1,
+            firstName: 'firstName',
+            lastName: 'lastName',
           },
         ]);
       });
   });
 
-  it('Update one [PUT /:id]', () => {
+  it('should update a user by id [PUT /users/:id]', () => {
     return request(app.getHttpServer())
-      .put('/user/2')
+      .put('/users/1')
       .expect(HttpStatus.OK)
       .send({
-        firstName: 'firstName update',
-        lastName: 'lastName update',
+        firstName: 'firstName',
+        lastName: 'lastName',
       })
-      .then((res) => {
-        res.body;
+      .then(({ body }) => {
+        expect(body).toEqual({ users: 1 });
       });
   });
 
-  it('Delete one [DELETE /:id]', () => {
+  it('should delete a user by id [DELETE /users/:id]', () => {
     return request(app.getHttpServer())
-      .delete('/user/1')
-      .set('Accept', 'application/json')
+      .delete('/users/1')
       .expect(HttpStatus.OK);
   });
 

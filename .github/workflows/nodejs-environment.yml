@@ -23,3 +23,32 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
       - run: npm run build --if-present
+      
+  integration-test:
+
+    runs-on: ubuntu-latest
+  
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+    needs: [build]
+  
+    steps:
+      - uses: actions/checkout@v3
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Start Docker-Compose
+        run: cd tests && docker-compose up -d
+      - name: Install npm
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm install
+      - name: Run migrations for test
+        run: cd tests/src/apps/app-knex && npx knex migrate:up
+      - name: Run tests e2e
+        run: npm run test:e2e
+      - name: Stop Docker-Compose
+        run: cd tests && docker-compose down
