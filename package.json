@@ -61,8 +61,5 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/tony133/nestjs-knexjs"
-  },
-  "dependencies": {
-    "uuid": "9.0.0"
   }
 }
