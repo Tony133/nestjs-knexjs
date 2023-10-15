@@ -15,7 +15,7 @@ export class KnexCoreModule implements OnApplicationShutdown {
     private readonly moduleRef: ModuleRef,
   ) {}
 
-  static forRoot(options: KnexModuleOptions, connection?: string): DynamicModule {
+  public static forRoot(options: KnexModuleOptions, connection?: string): DynamicModule {
   
     const knexModuleOptions = {
       provide: KNEX_MODULE_OPTIONS,
