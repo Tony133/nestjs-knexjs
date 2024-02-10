@@ -32,23 +32,26 @@ First install the module via `yarn` or `npm` or `pnpm` and do not forget to inst
 
 
 ```bash
-    $ npm i --save nest-knexjs knex mysql   # for mysql/mariadb
-    $ npm i --save nest-knexjs knex pg      # for postgresql
-    $ npm i --save nest-knexjs knex sqlite  # for sqlite
+  $ npm i --save nest-knexjs knex mysql     # for mysql/mariadb
+  $ npm i --save nest-knexjs knex pg        # for postgresql
+  $ npm i --save nest-knexjs knex sqlite    # for sqlite
+  $ npm i --save nest-knexjs knex oracledb  # for oracledb
 ```
 or
 
 ```bash
-    $ yarn add nest-knexjs knex mysql   # for mysql/mariadb
-    $ yarn add nest-knexjs knex pg      # for postgresql
-    $ yarn add nest-knexjs knex sqlite  # for sqlite
+  $ yarn add nest-knexjs knex mysql     # for mysql/mariadb
+  $ yarn add nest-knexjs knex pg        # for postgresql
+  $ yarn add nest-knexjs knex sqlite    # for sqlite
+  $ yarn add nest-knexjs knex oracledb  # for oracledb
 ```
 or 
 
 ```bash
-    $ pnpm add nest-knexjs knex mysql   # for mysql/mariadb
-    $ pnpm add nest-knexjs knex pg      # for postgresql
-    $ pnpm add nest-knexjs knex sqlite  # for sqlite
+  $ pnpm add nest-knexjs knex mysql     # for mysql/mariadb
+  $ pnpm add nest-knexjs knex pg        # for postgresql
+  $ pnpm add nest-knexjs knex sqlite    # for sqlite
+  $ pnpm add nest-knexjs knex oracledb  # for oracledb
 ```
 
 ## Table of Contents
