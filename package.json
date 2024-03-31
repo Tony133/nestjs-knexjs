@@ -16,7 +16,7 @@
     "test:e2e:dev": "jest --config ./tests/jest-e2e.json --runInBand --watch",
     "prerelease": "npm run build",
     "release": "release-it",
-    "prepare": "husky install"
+    "prepare": "husky"
   },
   "devDependencies": {
     "@commitlint/cli": "19.2.1",
