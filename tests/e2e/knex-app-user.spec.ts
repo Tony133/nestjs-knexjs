@@ -1,11 +1,15 @@
-import { INestApplication, HttpStatus } from '@nestjs/common';
+import { HttpStatus } from '@nestjs/common';
 import { TestingModule, Test } from '@nestjs/testing';
 import { UsersModule } from '../src/apps/app-knex/app/users/users.module';
 import { KnexModule } from '../../lib';
 import * as request from 'supertest';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 
 describe('[Feature] Users - /users', () => {
-  let app: INestApplication;
+  let app: NestFastifyApplication;
 
   beforeAll(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
@@ -28,8 +32,11 @@ describe('[Feature] Users - /users', () => {
       ],
     }).compile();
 
-    app = moduleFixture.createNestApplication();
+    app = moduleFixture.createNestApplication<NestFastifyApplication>(
+      new FastifyAdapter(),
+    );
     await app.init();
+    await app.getHttpAdapter().getInstance().ready();
   });
 
   it('should create a new user [POST /users]', () => {
