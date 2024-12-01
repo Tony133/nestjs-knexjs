@@ -1,18 +1,25 @@
-import { HttpStatus, INestApplication } from '@nestjs/common';
+import { HttpStatus } from '@nestjs/common';
 import { Test } from '@nestjs/testing';
 import { AsyncOptionsClassModule } from '../src/async-class-options.module';
 import * as request from 'supertest';
+import {
+  FastifyAdapter,
+  NestFastifyApplication,
+} from '@nestjs/platform-fastify';
 
 describe('Knex (async configuration)', () => {
-  let app: INestApplication;
+  let app: NestFastifyApplication;
 
   beforeAll(async () => {
-    const module = await Test.createTestingModule({
+    const moduleFixture = await Test.createTestingModule({
       imports: [AsyncOptionsClassModule],
     }).compile();
 
-    app = module.createNestApplication();
+    app = moduleFixture.createNestApplication<NestFastifyApplication>(
+      new FastifyAdapter(),
+    );
     await app.init();
+    await app.getHttpAdapter().getInstance().ready();
   });
 
   it(`should return created entity`, () => {
