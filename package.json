@@ -23,7 +23,7 @@
     "@commitlint/config-angular": "19.7.0",
     "@eslint/eslintrc": "3.2.0",
     "@eslint/js": "9.18.0",
-    "@nestjs/common": "11.0.4",
+    "@nestjs/common": "11.0.5",
     "@nestjs/core": "11.0.4",
     "@nestjs/platform-fastify": "11.0.4",
     "@nestjs/testing": "11.0.4",
