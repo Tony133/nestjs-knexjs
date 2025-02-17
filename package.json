@@ -24,7 +24,7 @@
     "@eslint/eslintrc": "3.2.0",
     "@eslint/js": "9.20.0",
     "@nestjs/common": "11.0.9",
-    "@nestjs/core": "11.0.9",
+    "@nestjs/core": "11.0.10",
     "@nestjs/platform-fastify": "11.0.9",
     "@nestjs/testing": "11.0.9",
     "@types/jest": "29.5.14",
