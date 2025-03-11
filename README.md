@@ -159,6 +159,7 @@ export class UsersController {
       {
         useFactory: () => ({
           config: {
+            name: 'db1Connection',
             client: 'mysql',
             version: '5.7',
             useNullAsDefault: true,
@@ -176,12 +177,12 @@ export class UsersController {
           },
         }),
       },
-      'db1Connection',
     ),
     KnexModule.forRootAsync(
       {
         useFactory: () => ({
           config: {
+            name: 'db2Connection',
             client: 'mysql',
             version: '5.7',
             useNullAsDefault: true,
@@ -199,7 +200,6 @@ export class UsersController {
           },
         }),
       },
-      'db2Connection',
     ),
   ],
   controllers: [],
