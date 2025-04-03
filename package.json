@@ -26,7 +26,7 @@
     "@nestjs/common": "11.0.12",
     "@nestjs/core": "11.0.12",
     "@nestjs/platform-fastify": "11.0.12",
-    "@nestjs/testing": "11.0.12",
+    "@nestjs/testing": "11.0.13",
     "@types/jest": "29.5.14",
     "@types/node": "22.14.0",
     "@types/supertest": "6.0.3",
