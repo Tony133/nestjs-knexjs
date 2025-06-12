@@ -16,14 +16,17 @@ export class KnexCoreModule implements OnApplicationShutdown {
   ) {}
 
   public static forRoot(options: KnexModuleOptions, connection?: string): DynamicModule {
-  
+    if (connection) {
+      options.name = connection;
+    }
+
     const knexModuleOptions = {
       provide: KNEX_MODULE_OPTIONS,
       useValue: options,
     };
 
     const connectionProvider: Provider = {
-      provide: getConnectionToken(connection),
+      provide: getConnectionToken(options.name),
       useFactory: async () => await this.createConnectionFactory(options),
     };
 
@@ -35,9 +38,12 @@ export class KnexCoreModule implements OnApplicationShutdown {
   }
 
   public static forRootAsync(options: KnexModuleAsyncOptions, connection: string): DynamicModule {
+    if (connection) {
+      options.name = connection;
+    }
 
     const connectionProvider: Provider = {
-      provide: getConnectionToken(connection),
+      provide: getConnectionToken(options.name),
       useFactory: async (options: KnexModuleOptions) => {
         return await this.createConnectionFactory(options);
       },
@@ -52,7 +58,7 @@ export class KnexCoreModule implements OnApplicationShutdown {
     };
   }
 
-  async onApplicationShutdown(): Promise<any> {
+  public async onApplicationShutdown(): Promise<any> {
     const connection = this.moduleRef.get<Knex>(
       getConnectionToken(this.options as KnexModuleOptions) as Type<Knex>,
     );
@@ -83,7 +89,7 @@ export class KnexCoreModule implements OnApplicationShutdown {
         inject: options.inject || [],
       };
     }
-    
+
     // `as Type<KnexOptionsFactory>` is a workaround for microsoft/TypeScript#31603
     const inject = [
       (options.useClass || options.useExisting) as Type<
